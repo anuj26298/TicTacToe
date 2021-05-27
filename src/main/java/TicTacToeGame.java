@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToeGame {
@@ -12,8 +13,12 @@ public class TicTacToeGame {
 
         System.out.println("User Letter: " + userLetter);
         System.out.println("Computer Letter: " + computerLetter);
+//        Scanner userTossCall = new Scanner(System.in);
+        boolean firstMove = toss(userInput);
         int userMove = getUserMove(board, userInput);
         makeMove(board, userMove, userLetter);
+
+
     }
 
     private static char[] createBoard() {
@@ -38,8 +43,8 @@ public class TicTacToeGame {
                 board[8] + " | " + board[9] + " | ");
     }
 
-    private static int getUserMove(char[] board, Scanner userInput){
-        Integer[] validCells = {1,2,3,4,5,6,7,8,9};
+    private static int getUserMove(char[] board, Scanner userInput) {
+        Integer[] validCells = {1, 2, 3, 4, 5, 6, 7, 8, 9};
         while (true) {
             System.out.println("Enter your next move(1-9)");
             int index = userInput.nextInt();
@@ -47,14 +52,29 @@ public class TicTacToeGame {
                 return index;
         }
     }
-    private static boolean isSpaceFree(char[] board, int index){
+
+    private static boolean isSpaceFree(char[] board, int index) {
         return board[index] == ' ';
     }
 
-    private static void makeMove(char[] board, int index, char letter){
+    private static void makeMove(char[] board, int index, char letter) {
         boolean spaceFree = isSpaceFree(board, index);
         if (spaceFree)
             board[index] = letter;
     }
 
+    private static boolean toss(Scanner userCall) {
+        System.out.println("What's your Call? (Head or Tail)");
+        String userTossCall;
+        userTossCall = userCall.next();
+        int turn = (int) (Math.random() * 2);
+        String tossCall = new String[]{"Head", "Tail"}[turn];
+        if (userTossCall.equals(tossCall)) {
+            System.out.println("User Wins Toss");
+            return true;
+        } else {
+            System.out.println("Computer Wins Toss");
+            return false;
+        }
+    }
 }
